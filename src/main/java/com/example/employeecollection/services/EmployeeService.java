@@ -22,7 +22,7 @@ public class EmployeeService implements IEmployeeService {
                 "<br>Где *** - передаваемые параметры";
     }
 
-    public String addEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastName") String lastName) {
+    public String addEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
         Employee temp = new Employee(firstName, lastName);
         if (employeesList.size() <= 10) {
             employeesList.add(temp);
@@ -30,14 +30,14 @@ public class EmployeeService implements IEmployeeService {
         return "Сотрудник добавлен";
     }
 
-    public String removeEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastName") String lastName) {
+    public String removeEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
         Employee temp = new Employee(firstName, lastName);
         int index = employeesList.indexOf(temp);
         employeesList.remove(index);
         return "Сотрудник удален";
     }
 
-    public String findEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastName") String lastName) {
+    public String findEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
         Employee temp = new Employee(firstName, lastName);
         int index = employeesList.indexOf(temp);
         return employeesList.get(index).toString();
