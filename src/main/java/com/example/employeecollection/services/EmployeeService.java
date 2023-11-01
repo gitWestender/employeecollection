@@ -6,7 +6,6 @@ import com.example.employeecollection.exeptions.EmployeeStorageIsFullException;
 import com.example.employeecollection.interfaces.IEmployeeService;
 import com.example.employeecollection.model.Employee;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +13,32 @@ import java.util.List;
 @Service
 public class EmployeeService implements IEmployeeService {
 
-    List<Employee> employeesList = new ArrayList<>();
+    public List<Employee> employeesList = new ArrayList<>(List.of(
+            new Employee("Олег", "Олегович", 85000, 1),
+            new Employee("Николай", "Николаевич", 68000, 3),
+            new Employee("Даниил","Батькович",69000,2),
+            new Employee("Кузьма","Ларионович",50000,3),
+            new Employee("Некто","Нектович",90000,1),
+            new Employee("Надежда","Ждановна",18500,1),
+            new Employee("Софья","Кузьминична",46500,3)
+    ));
     public final int MAXNUMEMPLOYEE = 10;
+
+    public List<Employee> getEmployeesList() {
+        return employeesList;
+    }
 
     public String welcome() {
         return "<h2>Добро пожаловать в список сотрудников<h2>" +
                 "<h2>Доступные команды:</h2>" +
-                "/add?firstName=***&lastName=***" +
-                "<br>/remove?firstName=***&lastName=***" +
-                "<br>/find?firstName=***&lastName=***" +
+                "<b>/add?firstName=***&lastName=***&salary=***&department=***</b> - для добавления сотрудника" +
+                "<br><b>/remove?firstName=***&lastName=***&department=***</b> - для удаления сотрудника" +
+                "<br><b>/find?firstName=***&lastName=***&department=***</b> - для поиска сотрудника" +
                 "<br>Где *** - передаваемые параметры";
     }
 
-    public String addEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        Employee temp = new Employee(firstName, lastName);
+    public String addEmployee(String firstName, String lastName, int salary, int id) {
+        Employee temp = new Employee(firstName, lastName, salary, id);
         if (employeesList.size() > 10) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
         }
@@ -40,16 +51,16 @@ public class EmployeeService implements IEmployeeService {
         return "Сотрудник добавлен";
     }
 
-    public String removeEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        Employee temp = new Employee(firstName, lastName);
+    public String removeEmployee(String firstName, String lastName, int id) {
+        Employee temp = new Employee(firstName, lastName, id);
         if (employeesList.contains(temp)) {
             employeesList.remove(temp);
         }
         return "Сотрудник удален";
     }
 
-    public String findEmployee(@RequestParam("firstname") String firstName, @RequestParam("lastname") String lastName) {
-        Employee temp = new Employee(firstName, lastName);
+    public String findEmployee(String firstName, String lastName, int id) {
+        Employee temp = new Employee(firstName, lastName, id);
         int index = 0;
         for (int i = 0; i < employeesList.size(); i++) {
             if (employeesList.get(i).equals(temp)) {
@@ -60,4 +71,6 @@ public class EmployeeService implements IEmployeeService {
         }
         return employeesList.get(index).toString();
     }
+
+
 }
