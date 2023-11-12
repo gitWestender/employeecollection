@@ -3,6 +3,7 @@ package com.example.employeecollection.services;
 import com.example.employeecollection.exeptions.EmployeeAlreadyAddedException;
 import com.example.employeecollection.exeptions.EmployeeNotFoundException;
 import com.example.employeecollection.exeptions.EmployeeStorageIsFullException;
+import com.example.employeecollection.exeptions.InvalidInputException;
 import com.example.employeecollection.interfaces.IEmployeeService;
 import com.example.employeecollection.model.Employee;
 import org.apache.commons.lang3.StringUtils;
@@ -54,7 +55,7 @@ public class EmployeeService implements IEmployeeService {
             employeesList.add(temp);
             return "Сотрудник добавлен";
         } else {
-            throw new RuntimeException();
+            throw new InvalidInputException();
         }
 
     }
