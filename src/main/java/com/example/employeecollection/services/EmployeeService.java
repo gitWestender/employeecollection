@@ -3,8 +3,10 @@ package com.example.employeecollection.services;
 import com.example.employeecollection.exeptions.EmployeeAlreadyAddedException;
 import com.example.employeecollection.exeptions.EmployeeNotFoundException;
 import com.example.employeecollection.exeptions.EmployeeStorageIsFullException;
+import com.example.employeecollection.exeptions.InvalidInputException;
 import com.example.employeecollection.interfaces.IEmployeeService;
 import com.example.employeecollection.model.Employee;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,13 +44,20 @@ public class EmployeeService implements IEmployeeService {
         if (employeesList.size() > 10) {
             throw new EmployeeStorageIsFullException("Превышен лимит количества сотрудников в фирме");
         }
-        for (int i = 0; i < employeesList.size(); i++) {
-            if (employeesList.get(i).equals(temp)) {
-                throw new EmployeeAlreadyAddedException("Такой сотрудник уже присутствует");
+        if (StringUtils.isAlpha(firstName) && StringUtils.isAlpha(lastName)) {
+            for (int i = 0; i < employeesList.size(); i++) {
+                if (employeesList.get(i).equals(temp)) {
+                    throw new EmployeeAlreadyAddedException("Такой сотрудник уже присутствует");
+                }
             }
+            temp.setFirstName(StringUtils.capitalize(firstName));
+            temp.setLastName(StringUtils.capitalize(lastName));
+            employeesList.add(temp);
+            return "Сотрудник добавлен";
+        } else {
+            throw new InvalidInputException();
         }
-        employeesList.add(temp);
-        return "Сотрудник добавлен";
+
     }
 
     public String removeEmployee(String firstName, String lastName, int id) {
