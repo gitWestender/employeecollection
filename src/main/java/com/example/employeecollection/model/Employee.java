@@ -2,6 +2,8 @@ package com.example.employeecollection.model;
 
 import java.util.Objects;
 
+import static org.springframework.util.StringUtils.capitalize;
+
 public class Employee {
     private String firstName;
     private String lastName;
@@ -13,14 +15,14 @@ public class Employee {
     }
 
     public Employee(String firstName, String lastName, int department) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
         this.department = department;
     }
 
     public Employee(String firstName, String lastName, Integer salary, int department) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(lastName.toLowerCase());
         this.salary = salary;
         this.department = department;
     }
