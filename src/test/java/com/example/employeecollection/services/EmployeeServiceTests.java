@@ -3,6 +3,7 @@ package com.example.employeecollection.services;
 import com.example.employeecollection.exeptions.EmployeeAlreadyAddedException;
 import com.example.employeecollection.exeptions.EmployeeNotFoundException;
 import com.example.employeecollection.exeptions.InvalidInputException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,9 +40,16 @@ public class EmployeeServiceTests {
                 });
     }
 
-    @ParameterizedTest
-    @MethodSource("provideParams")
-    public void shouldThrowWhenNotFound() {
+    @Test
+    public void shouldThrowWhenNotContains() {
+        assertThrows(EmployeeNotFoundException.class,
+                () -> {
+                    out.addEmployee("Карл", "Маркс", 100, 1);
+                });
+    }
+
+    @Test
+    public void sholdThrowWhenFind() {
         assertThrows(EmployeeNotFoundException.class,
                 () -> {
                     out.addEmployee("Карл", "Маркс", 100, 1);
