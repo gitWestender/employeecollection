@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/departments")
+@RequestMapping("/department")
 @RestController
 public class DepartmentController {
     public final IDepartmentService depService;
