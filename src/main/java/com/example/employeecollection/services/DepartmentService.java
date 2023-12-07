@@ -45,4 +45,10 @@ public class DepartmentService implements IDepartmentService {
         return empService.getEmployeesList().stream()
                 .collect(Collectors.groupingBy(Employee::getDepartment));
     }
+
+    public Double sumOfSalary(int id) {
+        return empService.getEmployeesList().stream()
+                .filter(e -> e.getDepartment() == id)
+                .mapToDouble(Employee::getSalary).sum();
+    }
 }

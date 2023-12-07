@@ -10,4 +10,5 @@ public interface IDepartmentService {
     Employee findEmpWithMinSalaryOnDepart(int id);
     List<Employee> returnAllEmployeesOnDepart(int id);
     Map<Integer, List<Employee>> returnAllEmployees();
+    Double sumOfSalary(int id);
 }

@@ -2,10 +2,7 @@ package com.example.employeecollection.controllers;
 
 import com.example.employeecollection.interfaces.IDepartmentService;
 import com.example.employeecollection.model.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -19,23 +16,28 @@ public class DepartmentController {
         this.depService = iService;
     }
 
-    @GetMapping("/max-salary")
-    public Employee findEmpWithMaxSalaryOnDepart(@RequestParam("id") int id) {
+    @GetMapping("/{id}/max-salary")
+    public Employee findEmpWithMaxSalaryOnDepart(@PathVariable("id") int id) {
         return depService.findEmpWithMaxSalaryOnDepart(id);
     }
 
-    @GetMapping("/min-salary")
-    public Employee findEmpWithMinSalaryOnDepart(@RequestParam("id") int id) {
+    @GetMapping("/{id}/min-salary")
+    public Employee findEmpWithMinSalaryOnDepart(@PathVariable("id") int id) {
         return depService.findEmpWithMinSalaryOnDepart(id);
     }
 
-    @GetMapping(value = "/all",params = "id")
-    public List<Employee> returnAllEmployeesOnDepart(@RequestParam("id") int id) {
+    @GetMapping("/{id}/all")
+    public List<Employee> returnAllEmployeesOnDepart(@PathVariable("id") int id) {
         return depService.returnAllEmployeesOnDepart(id);
     }
 
     @GetMapping("/all")
     public Map<Integer, List<Employee>> returnAllEmployees() {
         return depService.returnAllEmployees();
+    }
+
+    @GetMapping("/{id}/salary/sum")
+    public Double sumOfSalaryOnAllDeps(@PathVariable ("id") int id) {
+        return depService.sumOfSalary(id);
     }
 }
